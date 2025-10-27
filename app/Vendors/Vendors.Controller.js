@@ -2,7 +2,7 @@ const { VendorsService } = require("../../service");
 const {
   OutParser: { OutFailed, OutSuccess },
 } = require("../../utils");
-const { VendorsValidation } = require("./validation");
+const { VendorsValidation } = require("./Validation");
 
 class VendorsController {
   async createVendorsController(req, res) {

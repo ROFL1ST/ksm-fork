@@ -2,7 +2,7 @@ const { FinanceService } = require("../../service");
 const {
   OutParser: { OutFailed, OutSuccess },
 } = require("../../utils");
-const { FinanceValidation } = require("./validation");
+const { FinanceValidation } = require("./Validation");
 
 class FinanceController {
   async createFinanceController(req, res) {

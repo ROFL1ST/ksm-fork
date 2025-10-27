@@ -2,7 +2,7 @@ const { ProductsService } = require("../../service");
 const {
   OutParser: { OutFailed, OutSuccess },
 } = require("../../utils");
-const { ProductsValidation } = require("./validation");
+const { ProductsValidation } = require("./Validation");
 
 class ProductsController {
   async createProductsController(req, res) {

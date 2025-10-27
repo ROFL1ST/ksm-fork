@@ -2,7 +2,7 @@ const { ClientsService } = require("../../service");
 const {
   OutParser: { OutFailed, OutSuccess },
 } = require("../../utils");
-const { ClientsValidation } = require("./validation");
+const { ClientsValidation } = require("./Validation");
 
 class ClientsController {
   async createClientsController(req, res) {
