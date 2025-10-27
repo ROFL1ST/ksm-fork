@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surat Jalan - PT Fajar Eka Tiga Pilar</title>
+    <style>
+      /* Reset dan Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        background: white;
+        line-height: 1.4;
+        color: #000;
+      }
+
+      /* Page Styles untuk A4 */
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 15mm;
+        margin: 0 auto;
+        background: white;
+        position: relative;
+        page-break-after: always;
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+      }
+
+      /* Header Styles */
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 2px solid #000;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        flex: 1;
+      }
+
+      .logo {
+        width: 150px;
+        height: auto;
+      }
+
+      .header-right {
+        text-align: right;
+        flex: 1;
+      }
+
+      .header-right h1 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .header-right p {
+        font-size: 11px;
+        line-height: 1.4;
+        margin: 2px 0;
+      }
+
+      /* Continuation Header */
+      .continuation-header {
+        border-bottom: 2px solid #000;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .continuation-header h2 {
+        font-size: 18px;
+        margin-bottom: 5px;
+      }
+
+      .continuation-header p {
+        font-size: 11px;
+      }
+
+      /* Recipient Section */
+      .recipient-section {
+        border-bottom: 2px solid #000;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+      }
+
+      .recipient-section h3 {
+        font-size: 12px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .recipient-section p {
+        font-size: 11px;
+        line-height: 1.5;
+      }
+
+      /* Title */
+      .surat-jalan-title {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+
+      /* Info Box */
+      .info-box {
+        border: 2px solid #000;
+        margin-bottom: 20px;
+      }
+
+      .info-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        border-bottom: 2px solid #000;
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-cell {
+        padding: 8px 12px;
+        font-size: 11px;
+        border-right: 2px solid #000;
+      }
+
+      .info-cell:last-child {
+        border-right: none;
+      }
+
+      .info-label {
+        font-weight: bold;
+      }
+
+      /* Table Styles */
+      .table-container {
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #000;
+        font-size: 11px;
+        table-layout: fixed;
+      }
+
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: left;
+        word-wrap: break-word;
+        vertical-align: top;
+      }
+
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      td:nth-child(1) {
+        text-align: center;
+        width: 15%;
+      }
+
+      td:nth-child(2) {
+        width: 65%;
+      }
+
+      td:nth-child(3),
+      td:nth-child(4) {
+        text-align: center;
+        width: 10%;
+      }
+
+      /* Summary Box */
+      .summary-box {
+        border: 2px solid #000;
+        padding: 12px;
+        margin-bottom: 20px;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        margin-bottom: 5px;
+      }
+
+      .summary-label {
+        font-weight: bold;
+      }
+
+      /* Signature Section */
+      .signature-section {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-top: 40px;
+      }
+
+      .signature-box {
+        text-align: center;
+      }
+
+      .signature-title {
+        font-size: 11px;
+        font-weight: bold;
+        margin-bottom: 60px;
+      }
+
+      .signature-line {
+        border-top: 1px solid #000;
+        padding-top: 5px;
+        font-size: 11px;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: right;
+        font-size: 10px;
+        font-style: italic;
+        margin-top: 40px;
+        position: absolute;
+        bottom: 20px;
+        right: 0;
+        width: 100%;
+      }
+
+      /* Print Styles untuk Puppeteer */
+      @media print {
+        body {
+          margin: 0;
+          padding: 0;
+          background: white;
+        }
+
+        .page {
+          width: 210mm;
+          height: 297mm;
+          margin: 0;
+          padding: 15mm;
+          box-shadow: none;
+          page-break-after: always;
+        }
+
+        .page:last-child {
+          page-break-after: auto;
+        }
+
+        /* Pastikan tidak ada elemen yang terpotong */
+        .table-container {
+          page-break-inside: avoid;
+        }
+
+        .summary-box {
+          page-break-inside: avoid;
+        }
+
+        .signature-section {
+          page-break-before: avoid;
+        }
+      }
+
+      /* Keterangan khusus untuk konten panjang */
+      .keterangan-content {
+        font-size: 11px;
+        line-height: 1.4;
+        margin-bottom: 10px;
+      }
+
+      .page-number {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="document-container">
+      <!-- Halaman akan di-generate oleh JavaScript -->
+    </div>
+
+    <script>
+      // Data dinamis untuk surat jalan
+              const data = <%- JSON.stringify(data || []) %>;
+      const travelDocumentData = {
+        company: {
+          name: "PT Fajar Eka Tiga Pilar",
+          address: "Sigma Kartika Green Warehouse",
+          block: "Blok I46",
+          city: "Kab. Bogor Jawa Barat 16340",
+          country: "Indonesia",
+          logo: "https://fajarekatigapilar.co.id/wp-content/uploads/2025/09/Logo.png",
+        },
+        recipient: data.recipient,
+        documentInfo: data.documentInfo,
+        products: data.products,
+        keterangan: {
+          title: "Keterangan :",
+          details: data.description
+        },
+        totals:data.totals,
+        signatures: data.signatures
+      };
+
+      // Konfigurasi untuk pembagian halaman
+      const config = {
+        maxProductsPerPage: 8,
+        productsPerPageAfterFirst: 10, // Bisa lebih banyak di halaman selanjutnya karena tidak ada header besar
+      };
+
+      // Fungsi untuk membuat halaman pertama
+      function createFirstPage(products, pageNumber) {
+             const formatIDR = (value) => {
+              if (isNaN(value)) {
+                return "Rp 0";
+              }
+
+              return new Intl.NumberFormat("id-ID", {
+                style: "currency",
+                currency: "IDR",
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0,
+              }).format(value);
+            };
+        return `
+                <div class="page">
+                    <!-- Header -->
+                    <div class="header">
+                        <div class="header-left">
+                            <img src="${
+                              travelDocumentData.company.logo
+                            }" alt="Logo ${
+          travelDocumentData.company.name
+        }" class="logo" />
+                        </div>
+                        <div class="header-right">
+                            <h1>${travelDocumentData.company.name}</h1>
+                            <p>${travelDocumentData.company.address}</p>
+                            <p>${travelDocumentData.company.block}</p>
+                            <p>${travelDocumentData.company.city}</p>
+                            <p>${travelDocumentData.company.country}</p>
+                        </div>
+                    </div>
+
+                    <!-- Recipient Section -->
+                    <div class="recipient-section">
+                        <h3>Kepada :</h3>
+                        <p><strong>${
+                          travelDocumentData.recipient.name
+                        }</strong></p>
+                        ${travelDocumentData.recipient.address
+                          .map((line) => `<p>${line}</p>`)
+                          .join("")}
+                    </div>
+
+                    <!-- Surat Jalan Title -->
+                    <div class="surat-jalan-title">${
+                      travelDocumentData.documentInfo.title
+                    }</div>
+
+                    <!-- Info Box -->
+                    <div class="info-box">
+                        <div class="info-row">
+                            <div class="info-cell">
+                                <span class="info-label">Nomor</span><br />
+                                ${travelDocumentData.documentInfo.po_number}
+                            </div>
+                            <div class="info-cell">
+                                <span class="info-label">Tanggal PO</span><br />
+                                ${travelDocumentData.documentInfo.input_date}
+                            </div>
+                            <div class="info-cell">
+                                <span class="info-label">Tanggal Kirim</span><br />
+                                ${travelDocumentData.documentInfo.send_date}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kts.</th>
+                                    <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${products
+                                  .map(
+                                    (product) => `
+                                    <tr>
+                                        <td>${product.code}</td>
+                                        <td>${product.product_name} ${product.description} ${product.unit_code}</td>
+                                        <td>${product.quantity}</td>
+                                        <td>${formatIDR(product.price)}</td>
+                                        <td>${formatIDR(product.discount_amount)}</td>
+                                        <td>${formatIDR(product.total - product.discount_amount)}</td>
+                                    </tr>
+                                `
+                                  )
+                                  .join("")}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Summary Box -->
+                    <div style="display: flex;justify-content: space-between;gap: 20px;margin-top: 20px;font-family: Arial, sans-serif;font-size: 13px;">
+                      <!-- Box Keterangan -->
+                      <div class="summary-box" style="
+                        flex: 1;
+                        border: 1px solid #ddd;
+                        border-radius: 8px;
+                        padding: 12px 16px;
+                        background: #fafafa;
+                      ">
+                        <div class="summary-row" style="margin-bottom: 8px;">
+                          <span class="summary-label" style="font-weight: bold; font-size: 14px;">
+                            ${travelDocumentData.keterangan.title}
+                          </span>
+                        </div>
+                            <div class="summary-row" style="
+                              display: flex;
+                              justify-content: space-between;
+                              padding: 4px 0;
+                              border-bottom: 1px dashed #e0e0e0;
+                            ">
+                              <span>${travelDocumentData.keterangan.details}</span>
+                            </div>
+                      </div>
+
+                      <!-- Box Total -->
+                      <div style="
+                        flex: 0.6;
+                        padding: 12px 16px;
+                      ">
+                        <div class="summary-row" style="
+                          display: flex;
+                          justify-content: space-between;
+                          margin-bottom: 10px;
+                        ">
+                          <span><strong>Sub Total</strong></span>
+                          <span style="font-weight: bold;">${travelDocumentData.totals.price}</span>
+                        </div>
+                        <div class="summary-row" style="
+                          display: flex;
+                          justify-content: space-between;
+                          margin-bottom: 10px;
+                        ">
+                          <span><strong>Diskon</strong></span>
+                          <span style="font-weight: bold;">${travelDocumentData.totals.discount_amount}</span>
+                        </div>
+                        <div class="summary-row" style="
+                          display: flex;
+                          justify-content: space-between;
+                          margin-bottom: 10px;
+                        ">
+                          <span><strong>PPN (11%)</strong></span>
+                          <span style="font-weight: bold;">${travelDocumentData.totals.ppn_amount}</span>
+                        </div>
+                        <div class="summary-row" style="
+                          display: flex;
+                          justify-content: space-between;
+                          border-bottom: 3px solid #000;
+                          margin-bottom: 10px;
+                          padding-bottom: 24px;
+                        ">
+                          <span><strong>Total</strong></span>
+                          <span style="font-weight: bold;">${travelDocumentData.totals.final_total}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Signature Section -->
+                    <div class="signature-section">
+                        ${travelDocumentData.signatures
+                          .map(
+                            (signature) => `
+                            <div class="signature-box">
+                                <div class="signature-title">${signature.title}</div>
+                                <div class="signature-line">${signature.name}</div>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+
+                    <div class="page-number">Halaman ${pageNumber}</div>
+                </div>
+            `;
+      }
+
+      // Fungsi untuk membuat halaman lanjutan
+      function createContinuationPage(products, pageNumber) {
+        const totalQuantity = products.reduce(
+          (sum, product) => sum + product.quantity,
+          0
+        );
+
+
+        return `
+                <div class="page">
+                    <!-- Continuation Header -->
+                    <div class="continuation-header">
+                        <h2>Lanjutan ${
+                          travelDocumentData.documentInfo.title
+                        }</h2>
+                        <p><strong>Nomor Surat: ${
+                          travelDocumentData.documentInfo.number
+                        }</strong> | <strong>Tanggal: ${
+          travelDocumentData.documentInfo.date
+        }</strong></p>
+                    </div>
+
+                    <!-- Table -->
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Kts.</th>
+                                    <th>Harga</th>
+                                    <th>Diskon</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${products
+                                  .map(
+                                    (product) => `
+                                    <tr>
+                                        <td>${product.code}</td>
+                                        <td>${product.product_name} ${product.description} ${product.unit_code}</td>
+                                        <td>${product.quantity}</td>
+                                        <td>${formatIDR(product.price)}</td>
+                                        <td>${formatIDR(product.discount_amount)}</td>
+                                        <td>${formatIDR(product.total - product.discount_amount)}</td>
+                                    </tr>
+                                `
+                                  )
+                                  .join("")}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Summary Box untuk halaman lanjutan -->
+                    <div class="summary-box">
+                        <div class="summary-row">
+                            <span class="summary-label">Keterangan Tambahan :</span>
+                            <span></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Barang tambahan untuk stok tambahan</span>
+                            <span></span>
+                        </div>
+                        <div class="summary-row">
+                            <span>Mohon dicek kembali kualitas dan kuantitasnya</span>
+                            <span></span>
+                        </div>
+                        <div class="summary-row" style="margin-top: 30px">
+                            <span></span>
+                            <span><strong>Total Kuantitas Halaman ${pageNumber}</strong></span>
+                            <span style="margin-left: 20px"><strong>${totalQuantity}</strong></span>
+                        </div>
+                        <div class="summary-row">
+                            <span></span>
+                            <span><strong>Jumlah Barang Halaman ${pageNumber}</strong></span>
+                            <span style="margin-left: 20px"><strong>${
+                              products.length
+                            }</strong></span>
+                        </div>
+                    </div>
+
+                    <!-- Signature Section -->
+                    <div class="signature-section">
+                        ${travelDocumentData.signatures
+                          .map(
+                            (signature) => `
+                            <div class="signature-box">
+                                <div class="signature-title">${signature.title}</div>
+                                <div class="signature-line">${signature.name}</div>
+                            </div>
+                        `
+                          )
+                          .join("")}
+                    </div>
+
+                    <div class="page-number">Halaman ${pageNumber}</div>
+                </div>
+            `;
+      }
+
+      // Fungsi utama untuk menghasilkan dokumen
+      function generateDocument() {
+        const container = document.getElementById("document-container");
+        const allProducts = travelDocumentData.products;
+
+        // Hitung jumlah halaman yang diperlukan
+        const totalPages = Math.ceil(
+          allProducts.length / config.maxProductsPerPage
+        );
+
+        // Generate setiap halaman
+        for (let i = 0; i < totalPages; i++) {
+          const startIndex = i * config.maxProductsPerPage;
+          const endIndex = startIndex + config.maxProductsPerPage;
+          const pageProducts = allProducts.slice(startIndex, endIndex);
+
+          if (i === 0) {
+            // Halaman pertama
+            container.innerHTML += createFirstPage(pageProducts, i + 1);
+          } else {
+            // Halaman lanjutan
+            container.innerHTML += createContinuationPage(pageProducts, i + 1);
+          }
+        }
+      }
+
+      // Jalankan generate document ketika halaman dimuat
+      document.addEventListener("DOMContentLoaded", generateDocument);
+    </script>
+  </body>
+</html>

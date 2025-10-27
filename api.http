@@ -1,0 +1,116 @@
+@BASE_URL_DEV = http://localhost:3000/api/v1
+
+# AUTH (REGISTER)
+POST {{BASE_URL_DEV}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "conf_password":"123456",
+  "password":"123456"
+}
+
+###
+# AUTH (LOGIN)
+POST {{BASE_URL_DEV}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password":"123456"
+}
+
+###
+# AUTH (SESION CHECK COOKIE)
+POST {{BASE_URL_DEV}}/auth/sesion
+
+###
+# AUTH (LOGOUT)
+POST {{BASE_URL_DEV}}/auth/logout
+
+###
+# GET NOTES (BY USER ID)
+GET {{BASE_URL_DEV}}/notes?size=10&page=1&search=
+
+
+###
+# GET NOTES (BY NOTE_ID)
+GET {{BASE_URL_DEV}}/notes/one?note_id=5
+
+###
+# GET NOTES DETAIL (BY NOTE_ID)
+GET {{BASE_URL_DEV}}/notes/onde?note_id=5
+
+
+###
+# NOTES (CREATE NOTE HEADER)
+POST {{BASE_URL_DEV}}/notes
+Content-Type: application/json
+
+{
+  "title": "Learning Language"
+}
+
+###
+# NOTES (UPDATE NOTE HEADER)
+PATCH {{BASE_URL_DEV}}/notes
+Content-Type: application/json
+
+{
+  "note_id": 5,
+  "title": "Learning Language"
+}
+
+###
+# GET BLOCKS (BY NOTE ID)
+DELETE {{BASE_URL_DEV}}/notes/blocks?note_id=5
+
+
+###
+# GET BLOCKS (BY NOTE ID)
+GET {{BASE_URL_DEV}}/notes/blocks?note_id=5
+
+
+###
+# GET BLOCKS PARENTS (BY NOTE ID)
+GET {{BASE_URL_DEV}}/notes/blocks?note_id=5
+
+###
+# BLOCKS (CREATE BLOCKS BY NOTE_ID)
+POST {{BASE_URL_DEV}}/notes/block
+Content-Type: application/json
+{
+  "note_id": 5,
+  "content": "this content",
+  "type":"text" ,
+  "parent_id": null
+}
+
+
+# BLOCKS PARENTS (CREATE BLOCKS BY BLOCK_ID) allow("text", "checked", "unchecked", "image")
+PATCH {{BASE_URL_DEV}}/notes/block
+Content-Type: application/json
+{
+  "note_id": 5,
+  "block_id": 1,
+  "content": "this content",
+  "type":"text" ,
+  "parent_id": null
+}
+
+###
+# UPDATE BLOCKS POSITION (BY ID BLOCK)
+PATCH {{BASE_URL_DEV}}/notes/block-position
+Content-Type: application/json
+
+{
+  "blocks_id":1 ,
+  "old_index":2,
+  "new_index":0,
+  "note_id":1
+}
+
+
+###
+# DELETE BLOCK (BY ID BLOCK)
+DELETE  {{BASE_URL_DEV}}/notes/block?block_id=
