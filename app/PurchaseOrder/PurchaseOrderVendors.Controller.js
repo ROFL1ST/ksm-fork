@@ -4,7 +4,7 @@ const {
   PrintPDF: { generatePDF },
 } = require("../../utils");
 
-const { PurchaseOrderVendorsValidation } = require("./validation");
+const { PurchaseOrderVendorsValidation } = require("./Validation");
 const fs = require("fs");
 const ejs = require("ejs");
 const path = require("path");
