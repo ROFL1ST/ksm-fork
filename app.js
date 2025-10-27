@@ -17,10 +17,9 @@ app.set("view engine", "jade");
 app.use(
   cors({
     origin: [
-      // "https://ksm-uat.mafiincloud.com",
-      "https://hwx1l9qw-8080.asse.devtunnels.ms/",
+      "https://ksm-uat.mafiincloud.com",
       "http://localhost:8080",
-      // "https://hwx1l9qw-8080.asse.devtunnels.ms",
+      "https://gl4wt6xl-8080.asse.devtunnels.ms",
       // "https://gl4wt6xl-8080.asse.devtunnels.ms",
       // "https://gl4wt6xl-8080.asse.devtunnels.ms",
     ],
